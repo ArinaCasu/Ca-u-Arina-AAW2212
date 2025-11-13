@@ -1,1 +1,36 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Inserarea grupelor</title>
+</head>
+<body>
+	<?php
+		$server = "localhost";
+		$user = "root";
+		$pas = "";
+		$db_name = "test_bd_aaw2212";
+		$con = new mysqli($server, $user, $pas, $db_name);
+		if ($con->connect_error) {
+		  die("Connection failed: " . $con->connect_error);
+		}
+	?>
+	<form method="POST" action="insgroup.php">
+		<input type="text" name="gr" placeholder="Denumirea grupei">
+		<select name="idsp">
+			<option selected disabled>Selectati specialitate</option>
+			<?php
+				$sql = "SELECT * FROM specialitate ORDER BY Specialitate";
+				$result = $con->query($sql);
+				while($s = $result->fetch_row())
+				{
+					echo "<option value={$s[0]}>$s[1]</option>";
+				}
+			?>
+		</select>
+		<input type="submit" value="Adauga">
+	</form>
+	<?php
+		$con->close();
+	?>
+</body>
+</html>
